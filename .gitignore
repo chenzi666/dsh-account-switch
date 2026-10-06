@@ -1,0 +1,39 @@
+node_modules/
+.sandbox/
+*.tmp
+*.lock
+
+# ===== 凭证与账号池：永不入库 =====
+.credentials.yaml
+.credentials.yaml.*
+.credentials*.bak
+*.pre-account-switch.bak
+.pre-*.bak
+
+# ===== 账号库运行时产物 =====
+accounts/
+registry.json
+quota-switch.log
+load-probe.json
+key_pool.json
+keys.txt
+accounts.jsonl
+tokens.json
+cookies.txt
+
+# ===== 环境与密钥 =====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# ===== 本地噪音 =====
+*.log
+!docs/*.log
+.DS_Store
+Thumbs.db
+probe_*.png
+*.pre-*.bak

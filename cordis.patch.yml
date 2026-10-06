@@ -1,0 +1,29 @@
+# dsh-account-switch bundle patch
+#
+# 多账号库 + 热切换。全部走公开 seam（ctx.credentials / credentials/record-updated），
+# 不改内核、不 patch 官方包，因此 Harness 升级不会把它冲掉。
+#
+# 存储布局：
+#   $DSH_HOME/.credentials.yaml
+#     deepseek-account-platform/default          ← 活跃账号（官方唯一的读写槽位）
+#     deepseek-account-platform/device           ← 设备指纹（官方持有，本插件不动）
+#     deepseek-account-platform/account-<id>     ← 本插件维护的账号存档槽位
+#   $DSH_HOME/accounts/registry.json             ← 账号元数据（昵称/归属/时间线）
+#
+# 为什么元数据不进 .credentials.yaml：credentials-local 的解析器对文档做严格白名单
+# 校验，顶层只允许 version/refs/records，每条 record 只允许 kind/payload。任何额外
+# 字段都会让整个文档解析失败 —— 那是启动级故障，不是回退。
+
+- insert:
+    - id: dsh-account-switch
+      name: 'dsh-account-switch'
+      config:
+        enabled: true
+        # 启动时把当前 default 槽位归档进账号库（幂等）。
+        autoArchiveOnStart: true
+        # 捕获到新 token 时自动分配槽位并入库，无需手动 add。
+        autoCaptureOnSignIn: true
+        # 打印每次归档与抢救的日志，排查多账号问题时打开。
+        verbose: false
+        # 留空表示跟随 $DSH_HOME；测试时可指向隔离目录。
+        # home: /path/to/isolated-dsh-home

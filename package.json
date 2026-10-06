@@ -1,0 +1,73 @@
+{
+  "name": "dsh-account-switch",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness 多账号插件：一次登录多个账号并随时切换活跃账号（热切换，无需重启）",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./keys": "./lib/keys.js",
+    "./store": "./lib/store.js",
+    "./slots": "./lib/slots.js",
+    "./core": "./lib/core.js",
+    "./home": "./lib/home.js",
+    "./lock": "./lib/lock.js",
+    "./remote": "./lib/remote.js",
+    "./typert": {
+      "default": "./lib/typert.host.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json",
+    "./identity": "./lib/identity.js"
+  },
+  "bin": {
+    "dsh-account": "bin/dsh-account.js"
+  },
+  "files": [
+    "lib",
+    "bin",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "yaml": "^2.6.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "account",
+    "multi-account",
+    "credentials"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dshTarget": "0.2.0-rc.2"
+}
